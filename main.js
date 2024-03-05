@@ -1,15 +1,13 @@
-// Elements
+
 const tasksList = document.querySelector("#tasks-list")
 const addTaskForm = document.querySelector("form#add-task")
 const addTaskInput = document.querySelector("#add-task-input")
 const clearAllTasksBtn = document.querySelector("button#clear-all-tasks")
 
-// Total List Of Tasks
+
 let list = JSON.parse(localStorage.getItem("tasks")) || []
 
-/**
- * Show All Tasks From Local Storage In Page
- */
+
 function showTasksList() {
   tasksList.innerHTML = ""
   const list = JSON.parse(localStorage.getItem("tasks")) || []
@@ -65,9 +63,7 @@ function showTasksList() {
   })
 }
 
-/**
- * Add new task to local storage
- */
+
 function addTask(event) {
   event.preventDefault()
 
@@ -88,24 +84,22 @@ function addTask(event) {
   showTasksList()
 }
 
-// Change Complete State
+
 function completeTask(id) {
-  // Get Task
+
   const taskIndex = list.findIndex(t => t.id == id)
   const task = list[taskIndex]
 
-  // Change State
+
   task.completed = !task.completed
   list[taskIndex] = task
 
-  // Save Changes
+
   localStorage.setItem("tasks", JSON.stringify(list))
   showTasksList()
 }
 
-/**
- * Remove task
- */
+
 function removeTask(id) {
   list = list.filter(t => t.id !== id)
   localStorage.setItem("tasks", JSON.stringify(list))
@@ -114,9 +108,6 @@ function removeTask(id) {
   showTasksList()
 }
 
-/**
- * Edit task
- */
 function editTask(id) {
   const taskText = document.querySelector("#task-text").value
 
@@ -130,7 +121,7 @@ function editTask(id) {
   showTasksList()
 }
 
-// Clear All Tasks
+
 function clearAllTasks() {
   if (list.length > 0) {
     list = []
@@ -149,7 +140,7 @@ function clearAllTasks() {
   }).show()
 }
 
-// Clear Complete Tasks
+
 function clearCompleteTasks() {
   if (list.length > 0) {
     if (confirm("Are you sure?")) {
@@ -170,7 +161,7 @@ function clearCompleteTasks() {
   }).showToast()
 }
 
-// Show Edit Modal And Pass Data
+
 function showEditModal(id) {
   const taskIndex = list.findIndex(t => t.id == id)
   const { text } = list[taskIndex]
@@ -184,7 +175,7 @@ function showEditModal(id) {
   $("#edit-modal.modal").modal("show")
 }
 
-// Show Remove Modal
+
 function showRemoveModal(id) {
   document
     .querySelector("#remove-button")
@@ -193,7 +184,7 @@ function showRemoveModal(id) {
   $("#remove-modal.modal").modal("show")
 }
 
-// Show Clear All Tasks Modal
+
 function showClearAllTasksModal() {
   if (list.length > 0) {
     return $("#clear-all-tasks-modal.modal").modal("show")
@@ -222,7 +213,7 @@ function showNotification(type, text) {
   }).show()
 }
 
-// Event Listeners
+
 addTaskForm.addEventListener("submit", addTask)
 window.addEventListener("load", () => addTaskInput.focus())
 
